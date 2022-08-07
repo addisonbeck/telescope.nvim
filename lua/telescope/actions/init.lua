@@ -572,6 +572,23 @@ actions.git_checkout = function(prompt_bufnr)
   end
 end
 
+actions.git_difftool = function(prompt_bufnr)
+  actions.close(prompt_bufnr)
+  local selection = action_state.get_selected_entry()
+  vim.cmd(string.format("term git sh %s", selection.value));
+  if ret == 0 then
+    utils.notify("actions.git_difftool", {
+      msg = string.format("%s showns.", selection.value),
+      level = "INFO",
+    })
+  else
+    utils.notify("actions.git_difftool", {
+      msg = "Error running git_difftool action.",
+      level = "ERROR",
+    })
+  end
+end
+
 --- Switch to git branch.<br>
 --- If the branch already exists in local, switch to that.
 --- If the branch is only in remote, create new branch tracking remote and switch to new one.

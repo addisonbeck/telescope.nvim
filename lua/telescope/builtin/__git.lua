@@ -63,14 +63,16 @@ git.commits = function(opts)
       prompt_title = "Git Commits",
       finder = finders.new_oneshot_job(git_command, opts),
       previewer = {
+        previewers.git_commit_message.new(opts),
         previewers.git_commit_diff_to_parent.new(opts),
         previewers.git_commit_diff_to_head.new(opts),
         previewers.git_commit_diff_as_was.new(opts),
-        previewers.git_commit_message.new(opts),
       },
       sorter = conf.file_sorter(opts),
       attach_mappings = function(_, map)
-        actions.select_default:replace(actions.git_checkout)
+        actions.select_default:replace(actions.git_difftool)
+        map("i", "<c-d>", actions.git_checkout)
+        map("n", "<c-d>", actions.git_checkout)
         map("i", "<c-r>m", actions.git_reset_mixed)
         map("n", "<c-r>m", actions.git_reset_mixed)
         map("i", "<c-r>s", actions.git_reset_soft)
