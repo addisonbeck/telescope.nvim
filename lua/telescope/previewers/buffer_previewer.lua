@@ -834,7 +834,7 @@ previewers.git_commit_message = defaulter(function(opts)
     end,
 
     define_preview = function(self, entry, status)
-      local cmd = { "git", "--no-pager", "log", "-n 1", entry.value }
+      local cmd = { "git", "--no-pager", "log", "-n 1", "--format=medium", entry.value }
 
       putils.job_maker(cmd, self.state.bufnr, {
         value = entry.value,
